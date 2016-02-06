@@ -41,9 +41,10 @@ app.use(flash());
 
 var routes = {
 	'/': rfr('./controllers/root'),
-	'/auth': rfr('./controllers/auth'),
 	'/dashboard': rfr('./controllers/dashboard'),
+	'/populate': rfr('./controllers/populate'),
 	'/collections': rfr('./controllers/collections'),
+	'/items': rfr('./controllers/items'),
 	'/settings': rfr('./controllers/settings')
 };
 

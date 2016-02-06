@@ -13,10 +13,12 @@ block body
 		h1= collection.title
 
 	p.subtitle
+		i.fa.fa-folder.text-highlighted
+		| &nbsp;&nbsp;
 		a(href = '/collections/')= 'Home'
 		each breadcrumb in breadcrumbs
 			| &nbsp;&nbsp;
-			i.fa.fa-angle-right.text-muted
+			i.fa.fa-angle-right.text-highlighted
 			| &nbsp;&nbsp;
 			a(href = '/collections/' + breadcrumb._id)= breadcrumb.title
 
@@ -32,8 +34,8 @@ block body
 	div.row
 		each item in child_items
 			div.col-md-3.item
-				a(href = '/collections/' + item._id)
+				a(href = '/items/' + item._id)
 					img(src = imgs[++i % imgs.length])
 
-				a(href = '/collections/' + item._id)
+				a(href = '/items/' + item._id)
 					p= item.title
