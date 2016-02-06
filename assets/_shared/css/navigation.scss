@@ -3,41 +3,52 @@
 div.navigation {
 	width: 100%;
 	margin: 0;
-	padding: 2px 0;
-}
+	padding: 6px 0;
+	text-align: center;
+	background-color: #333333;
 
-ul.navigation {
-	li {
+	ul {
 		display: inline-block;
-		font-size: 2em;
-		font-weight: lighter;
-		list-style-type: none;
-		margin-bottom: 10px;
+		margin: 0 auto;
+		padding: 0;
+		color: #ffffff;
 
-		a {
-			text-decoration: none;
-			display: block;
+		li {
+			display: inline-block;
+			font-size: 1.4em;
+			font-weight: normal;
+			list-style-type: none;
+			margin-left: 30px;
 
-			i {
-				margin-right: 15px;
-				color: $textMuted;
+			a {
+				text-decoration: none;
+				display: block;
+
+				i {
+					margin-right: 5px;
+					color: #bbbbbb;
+				}
+
+				span {
+					color: #ffffff;
+				}
 			}
 
-			span {
-				color: $textColour;
+			a.active {
+				i {
+					color: $textHighlight;
+				}
+			}
+
+			a:hover {
+				span {
+					text-decoration: underline;
+				}
 			}
 		}
 
-		a:hover, a.active {
-			i {
-				color: $textHighlight;
-			}
-		}
-
-		a:hover {
-			span {
-				text-decoration: underline;
-			}
+		li:first-of-type {
+			margin-left: 0;
 		}
 	}
 }

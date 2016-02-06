@@ -7,10 +7,10 @@ var express = require('express');
 var router = express.Router();
 
 router.get('/', function (req, res) {
-	res.render('dashboard/index', {
+	res.render('settings/index', {
 		_: {
-			activePage: 'dashboard',
-			title: null
+			activePage: 'settings',
+			title: 'Settings'
 		}
 	});
 });

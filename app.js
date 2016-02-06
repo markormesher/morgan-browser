@@ -35,7 +35,9 @@ app.use(flash());
 var routes = {
 	'/': rfr('./controllers/root'),
 	'/auth': rfr('./controllers/auth'),
-	'/dashboard': rfr('./controllers/dashboard')
+	'/dashboard': rfr('./controllers/dashboard'),
+	'/collections': rfr('./controllers/collections'),
+	'/settings': rfr('./controllers/settings')
 };
 
 for (var stem in routes) {
