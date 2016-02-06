@@ -17,7 +17,7 @@ block body
 	div.row
 		- var i = 0;
 		- var imgs = ['http://sidds.supplies/g/200/200', 'http://manoj.management/g/200/200'];
-		each collection in collections
+		each collection in child_collections
 			- ++i;
 			div.col-md-3.collection
 				a(href = '/collections/' + collection._id)

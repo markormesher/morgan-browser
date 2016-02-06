@@ -8,6 +8,7 @@ module.exports = mongoose.model(
 			type: Schema.Types.ObjectId,
 			ref: 'Collection'
 		},
+		sequence: Number,
 		title: String
 	}
 );

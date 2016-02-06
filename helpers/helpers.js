@@ -1,8 +1,8 @@
 module.exports = {
 
-	errorToDashboard: function(req, res, error) {
+	errorRedirect: function(req, res, destination, error) {
 		req.flash('error', error);
-		res.writeHead(302, {Location: '/'});
+		res.writeHead(302, {Location: destination});
 		res.end();
 	}
 
