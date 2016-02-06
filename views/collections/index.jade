@@ -2,3 +2,7 @@ extends ../_shared/root-layout
 
 block body
 	p Collections.
+
+	pre= JSON.stringify(err, null, 4)
+
+	pre= JSON.stringify(collections, null, 4)

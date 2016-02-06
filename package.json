@@ -4,11 +4,13 @@
   "description": "Simple media browser for my RPi",
   "main": "app.js",
   "dependencies": {
+    "async": "^1.5.2",
     "cookie-parser": "^1.4.1",
     "express": "^4.13.4",
     "express-flash": "0.0.2",
     "express-session": "^1.13.0",
     "jade": "^1.11.0",
+    "mongoose": "^4.4.2",
     "node-sass-middleware": "^0.9.7",
     "rfr": "^1.2.3"
   },

@@ -7,7 +7,14 @@ rfr = require('rfr'),
 sassMiddleware = require('node-sass-middleware'),
 cookieParser = require('cookie-parser'),
 session = require('express-session'),
-flash = require('express-flash');
+flash = require('express-flash'),
+mongoose = require('mongoose');
+
+//////////////////////////
+// Database connections //
+//////////////////////////
+
+mongoose.connect('mongodb://localhost/morgan-browser');
 
 //////////////////////////
 // Express + Middleware //

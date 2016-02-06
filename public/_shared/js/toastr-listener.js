@@ -4,16 +4,16 @@ $(document).ready(function() {
 		for (var msg in messages) {
 			switch (type) {
 				case 'error':
-					toastr.error(msg);
+					toastr.error(messages[msg]);
 					break;
 				case 'info':
-					toastr.info(msg);
+					toastr.info(messages[msg]);
 					break;
 				case 'success':
-					toastr.success(msg);
+					toastr.success(messages[msg]);
 					break;
 				case 'warning':
-					toastr.warning(msg);
+					toastr.warning(messages[msg]);
 					break;
 			}
 		}
