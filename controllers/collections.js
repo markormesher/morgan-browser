@@ -63,7 +63,7 @@ router.get('/populate', function (req, res) {
 	];
 
 	// remove all collections
-	Collection.remove({}, function (err) {
+	Collection.Model.remove({}, function (err) {
 		if (err) return res.json(err);
 
 		// remove all items
@@ -71,7 +71,7 @@ router.get('/populate', function (req, res) {
 			if (err) return res.json(err);
 
 			// insert new collections
-			Collection.insertMany(collections, function (err, c) {
+			Collection.Model.insertMany(collections, function (err, c) {
 				if (err) return res.json(err);
 
 				console.log(c);
@@ -100,16 +100,15 @@ router.get('/:id?', function (req, res) {
 		// get the collection "in focus"
 		collection: function (c) {
 			if (id == null) return c(null, null);
-			Collection.find({_id: id}, function (err, result) {
-				if (err) return c(err, null);
-				if (result.length != 1) return c('no collection', null);
+			Collection.get(id, function (result) {
+				if (result == null) return c(err, null);
 				c(null, result);
 			});
 		},
 
 		// get child collections
 		child_collections: function (c) {
-			Collection.find({parent_id: id}).sort({title: 'asc'}).exec(function (err, result) {
+			Collection.Model.find({parent_id: id}).sort({title: 'asc'}).exec(function (err, result) {
 				c(err, result);
 			});
 		},
@@ -123,7 +122,33 @@ router.get('/:id?', function (req, res) {
 
 		// get collection breadcrumbs
 		breadcrumbs: function(c) {
-			c(null, []);
+			// root?
+			if (id == null) return c(null, []);
+
+			// load this collection
+			var breadcrumbs = [];
+			Collection.get(id, function (result) {
+				if (result == null) return c(err, null);
+
+				// add to list
+				breadcrumbs.push(result);
+
+				// loop to keep progressively adding parents
+				var addParent = function() {
+					var lastCrumb = breadcrumbs[breadcrumbs.length - 1];
+
+					// reached the root?
+					if (!lastCrumb.parent_id) return c(null, breadcrumbs.reverse());
+
+					// add the parent and loop
+					Collection.get(lastCrumb.parent_id, function (result) {
+						if (result == null) return c(err, null);
+						breadcrumbs.push(result);
+						addParent();
+					});
+				};
+				addParent();
+			});
 		}
 
 	}, function (err, results) {
