@@ -17,8 +17,7 @@ module.exports = {
 
 	get: function(id, callback) {
 		this.Model.find({_id: id}, function(err, result) {
-			if (err || result.length != 1) return callback(null);
-			callback(result[0]);
+			callback(err || result.length != 1 ? null : result[0]);
 		});
 	}
 

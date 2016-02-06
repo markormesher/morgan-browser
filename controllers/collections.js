@@ -67,7 +67,7 @@ router.get('/populate', function (req, res) {
 		if (err) return res.json(err);
 
 		// remove all items
-		Item.remove({}, function (err) {
+		Item.Model.remove({}, function (err) {
 			if (err) return res.json(err);
 
 			// insert new collections
@@ -77,7 +77,7 @@ router.get('/populate', function (req, res) {
 				console.log(c);
 
 				// insert new items
-				Item.insertMany(items, function (err, i) {
+				Item.Model.insertMany(items, function (err, i) {
 					if (err) return res.json(err);
 
 					console.log(i);
@@ -115,7 +115,7 @@ router.get('/:id?', function (req, res) {
 
 		// get child items
 		child_items: function (c) {
-			Item.find({collection_id: id}).sort({sequence: 'asc'}).exec(function (err, result) {
+			Item.Model.find({collection_id: id}).sort({sequence: 'asc'}).exec(function (err, result) {
 				c(err, result);
 			});
 		},
@@ -155,10 +155,10 @@ router.get('/:id?', function (req, res) {
 		// check errors
 		if (err) console.log(err);
 		if (err == 'no collection') {
-			return helpers.errorRedirect(req, res, '/', 'Could not load collection');
+			return helpers.errorRedirect(req, res, '/collections', 'Could not load collection');
 		} else if (err) {
 			// TODO: fix this
-			return helpers.errorRedirect(req, res, '/', 'Could not load something');
+			return helpers.errorRedirect(req, res, '/', 'Something went wrong!');
 		}
 
 		// render collections
