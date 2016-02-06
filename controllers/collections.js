@@ -16,7 +16,7 @@ router.get('/', function (req, res) {
 	// find all root collections
 	Collection.find({parent_id: null}).sort({title: 'asc'}).exec(function(err, collections) {
 		// check for error
-		if (err || true) return helpers.errorToDashboard(req, res, 'Could not load collections!');
+		if (err) return helpers.errorToDashboard(req, res, 'Could not load collections!');
 
 		// render collections
 		res.render('collections/index', {
@@ -24,10 +24,24 @@ router.get('/', function (req, res) {
 				activePage: 'collections',
 				title: 'Collections'
 			},
-			err: err,
-			collections: collections
+			collections: [
+				{_id: 'a', parent_id: null, title: 'Films'},
+				{_id: 'a', parent_id: null, title: 'TV'},
+				{_id: 'a', parent_id: null, title: 'Films'},
+				{_id: 'a', parent_id: null, title: 'TV'},
+				{_id: 'a', parent_id: null, title: 'Films'},
+				{_id: 'a', parent_id: null, title: 'TV'},
+				{_id: 'a', parent_id: null, title: 'Films'},
+				{_id: 'a', parent_id: null, title: 'TV'},
+				{_id: 'a', parent_id: null, title: 'Films'},
+				{_id: 'a', parent_id: null, title: 'TV'}
+			]
 		});
 	});
+});
+
+router.get('/populate', function(req, res) {
+
 });
 
 module.exports = router;
