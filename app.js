@@ -1,17 +1,79 @@
-// dependencies
+//////////////////
+// Dependencies //
+//////////////////
 
-var express = require('express');
-var rfr = require('rfr');
+var express = require('express'),
+rfr = require('rfr'),
+sassMiddleware = require('node-sass-middleware'),
+cookieParser = require('cookie-parser'),
+session = require('express-session'),
+flash = require('express-flash');
 
-// set up server
+//////////////////////////
+// Express + Middleware //
+//////////////////////////
 
 var app = express();
 
-// set up routes
+app.use(sassMiddleware({
+	src: __dirname + '/assets/',
+	dest: __dirname + '/public/',
+	outputStyle: 'compressed'
+}));
+app.use(cookieParser('morgan-browser'));
+app.use(session({
+	secret: '6e227dd1-fad3-4c8c-b947-4c890d37b4e3',
+	resave: false,
+	saveUninitialized: true
+}));
+app.use(flash());
 
-app.use('/', rfr('./controllers/root.js'));
-app.use('/auth', rfr('./controllers/auth.js'));
+////////////
+// Routes //
+////////////
 
-// start server
+var routes = {
+	'/': rfr('./controllers/root'),
+	'/auth': rfr('./controllers/auth'),
+	'/dashboard': rfr('./controllers/dashboard')
+};
+
+for (var stem in routes) {
+	app.use(stem, routes[stem]);
+}
+
+// stop favicon requests
+app.use('/favicon.ico', function(req, res) { res.end(); });
+
+///////////
+// Views //
+///////////
+
+app.set('views', __dirname + '/views');
+app.set('view engine', 'jade');
+app.use(express.static(__dirname + '/public'));
+
+////////////
+// Errors //
+////////////
+
+// 404 handler and forward to main error handler
+app.use(function (req, res, next) {
+	var err = new Error('Not found');
+	err.status = 404;
+	err.message = 'Not found';
+	next(err);
+});
+
+app.use(function (err, req, res, next) {
+	err.status = err.status || 500;
+	res.status(err.status);
+	res.json(err);
+});
+
+////////////
+// Start! //
+////////////
 
 app.listen(3000);
+
