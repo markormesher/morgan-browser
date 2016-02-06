@@ -1,0 +1,24 @@
+{
+  "name": "morgan-browser",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "dependencies": {
+    "express": "^4.13.4",
+    "rfr": "^1.2.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/markormesher/morgan-browser.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/markormesher/morgan-browser/issues"
+  },
+  "homepage": "https://github.com/markormesher/morgan-browser#readme"
+}
