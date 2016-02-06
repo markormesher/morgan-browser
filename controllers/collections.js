@@ -9,7 +9,8 @@ var express = require('express'),
 // models
 
 var Collection = rfr('./models/collection'),
-	Item = rfr('./models/item');
+	Item = rfr('./models/item'),
+	ItemMeta = rfr('./models/item_meta');
 
 // routes
 
@@ -17,6 +18,11 @@ var router = express.Router();
 
 router.get('/populate', function (req, res) {
 	var ids = [
+		mongoose.Types.ObjectId(),
+		mongoose.Types.ObjectId(),
+		mongoose.Types.ObjectId(),
+		mongoose.Types.ObjectId(),
+		mongoose.Types.ObjectId(),
 		mongoose.Types.ObjectId(),
 		mongoose.Types.ObjectId(),
 		mongoose.Types.ObjectId(),
@@ -57,36 +63,60 @@ router.get('/populate', function (req, res) {
 	];
 
 	var items = [
+		{_id: ids[16], collection_id: ids[0], sequence: 0, title: 'It Follows'},
+		{_id: ids[17], collection_id: ids[0], sequence: 0, title: 'Yes Man'},
+		{_id: ids[18], collection_id: ids[0], sequence: 0, title: 'Hot Fuzz'},
+		{_id: ids[19], collection_id: ids[0], sequence: 0, title: 'Deadpool'},
+		{_id: ids[20], collection_id: ids[0], sequence: 0, title: 'Shaun of the Dead'},
+
 		{_id: ids[13], collection_id: ids[8], sequence: 1, title: 'Chuck vs. The Intersect'},
 		{_id: ids[14], collection_id: ids[8], sequence: 2, title: 'Chuck vs. The Helicopter'},
 		{_id: ids[15], collection_id: ids[8], sequence: 3, title: 'Chuck vs. The Tango'}
 	];
 
-	// remove all collections
-	Collection.Model.remove({}, function (err) {
-		if (err) return res.json(err);
+	var item_meta = [
+		{item_id: ids[16], key: 'year', value: '2015'},
+		{item_id: ids[17], key: 'year', value: '2008'},
+		{item_id: ids[18], key: 'year', value: '2007'},
+		{item_id: ids[19], key: 'year', value: '2016'},
+		{item_id: ids[20], key: 'year', value: '2004'}
+	];
 
-		// remove all items
-		Item.Model.remove({}, function (err) {
-			if (err) return res.json(err);
-
-			// insert new collections
-			Collection.Model.insertMany(collections, function (err, c) {
-				if (err) return res.json(err);
-
-				console.log(c);
-
-				// insert new items
-				Item.Model.insertMany(items, function (err, i) {
-					if (err) return res.json(err);
-
-					console.log(i);
-
-					res.writeHead(301, {Location: '/collections'});
-					res.end();
-				});
+	async.series([
+		function (c) {
+			Collection.Model.remove({}, function (err) {
+				c(err, 0)
 			});
-		});
+		},
+		function (c) {
+			Item.Model.remove({}, function (err) {
+				c(err, 0)
+			});
+		},
+		function (c) {
+			ItemMeta.Model.remove({}, function (err) {
+				c(err, 0)
+			});
+		},
+		function (c) {
+			Collection.Model.insertMany(collections, function (err) {
+				c(err, 0);
+			});
+		},
+		function (c) {
+			Item.Model.insertMany(items, function (err) {
+				c(err, 0);
+			});
+		},
+		function (c) {
+			ItemMeta.Model.insertMany(item_meta, function (err) {
+				c(err, 0);
+			});
+		}
+	], function (err) {
+		if (err) return res.json(err);
+		res.writeHead(301, {Location: '/collections'});
+		res.end();
 	});
 });
 
@@ -121,7 +151,7 @@ router.get('/:id?', function (req, res) {
 		},
 
 		// get collection breadcrumbs
-		breadcrumbs: function(c) {
+		breadcrumbs: function (c) {
 			// root?
 			if (id == null) return c(null, []);
 
@@ -134,7 +164,7 @@ router.get('/:id?', function (req, res) {
 				breadcrumbs.push(result);
 
 				// loop to keep progressively adding parents
-				var addParent = function() {
+				var addParent = function () {
 					var lastCrumb = breadcrumbs[breadcrumbs.length - 1];
 
 					// reached the root?
@@ -173,7 +203,6 @@ router.get('/:id?', function (req, res) {
 			breadcrumbs: results.breadcrumbs
 		});
 	});
-})
-;
+});
 
 module.exports = router;
