@@ -25,16 +25,15 @@ router.get('/', function (req, res) {
 				title: 'Collections'
 			},
 			collections: [
-				{_id: 'a', parent_id: null, title: 'Films'},
+				{_id: 'a', parent_id: null, title: 'Season 1'},
+				{_id: 'a', parent_id: null, title: 'Season 2'},
+				{_id: 'a', parent_id: null, title: 'Season 3'},
+				{_id: 'a', parent_id: null, title: 'Season 4'},
+				{_id: 'a', parent_id: null, title: 'Season 5'}
+			],
+			breadcrumbs: [
 				{_id: 'a', parent_id: null, title: 'TV'},
-				{_id: 'a', parent_id: null, title: 'Films'},
-				{_id: 'a', parent_id: null, title: 'TV'},
-				{_id: 'a', parent_id: null, title: 'Films'},
-				{_id: 'a', parent_id: null, title: 'TV'},
-				{_id: 'a', parent_id: null, title: 'Films'},
-				{_id: 'a', parent_id: null, title: 'TV'},
-				{_id: 'a', parent_id: null, title: 'Films'},
-				{_id: 'a', parent_id: null, title: 'TV'}
+				{_id: 'a', parent_id: null, title: 'Chuck'}
 			]
 		});
 	});

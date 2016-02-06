@@ -1,8 +1,27 @@
 extends ../_shared/root-layout
 
+block head
+	link(rel = 'stylesheet', href = '/collections/css/collections.css')
+
 block body
-	p Collections.
+	h1 Collections
 
-	pre= JSON.stringify(err, null, 4)
+	p.subtitle
+		a(href = '/collections/')= 'Home'
+		each breadcrumb in breadcrumbs
+			| &nbsp;&nbsp;
+			i.fa.fa-angle-right.text-muted
+			| &nbsp;&nbsp;
+			a(href = '/collections/' + breadcrumb._id)= breadcrumb.title
 
-	pre= JSON.stringify(collections, null, 4)
+	div.row
+		- var i = 0;
+		- var imgs = ['http://sidds.supplies/g/200/200', 'http://manoj.management/g/200/200'];
+		each collection in collections
+			- ++i;
+			div.col-md-3.collection
+				a(href = '/collections/' + collection._id)
+					img(src = imgs[i % imgs.length])
+
+				a(href = '/collections/' + collection._id)
+					p= collection.title
