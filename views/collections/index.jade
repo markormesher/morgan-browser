@@ -4,6 +4,9 @@ block head
 	link(rel = 'stylesheet', href = '/collections/css/collections.css')
 
 block body
+	- var i = 0;
+	- var imgs = ['http://sidds.supplies/g/200/200', 'http://manoj.management/g/200/200', 'http://placekitty.artisan.io/g/200/200'];
+
 	if collection == null
 		h1 Collections
 	else
@@ -18,14 +21,6 @@ block body
 			a(href = '/collections/' + breadcrumb._id)= breadcrumb.title
 
 	div.row
-		-
-			var i = 0;
-			var imgs = [
-			'http://sidds.supplies/g/200/200',
-			'http://manoj.management/g/200/200',
-			'http://placekitty.artisan.io/g/200/200'
-			];
-
 		each collection in child_collections
 			div.col-md-3.collection
 				a(href = '/collections/' + collection._id)
@@ -33,3 +28,12 @@ block body
 
 				a(href = '/collections/' + collection._id)
 					p= collection.title
+
+	div.row
+		each item in child_items
+			div.col-md-3.item
+				a(href = '/collections/' + item._id)
+					img(src = imgs[++i % imgs.length])
+
+				a(href = '/collections/' + item._id)
+					p= item.title
