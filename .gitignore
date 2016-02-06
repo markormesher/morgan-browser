@@ -1,28 +1,21 @@
+### Titanic ###
 
-# Created by https://www.gitignore.io/api/linux,intellij,node
+# Ignore CSS (commit the SCSS instead)
+*.css
+!public/_vendor/css/*
 
-### Linux ###
-*~
-
-# temporary files which can be created if a process still has a handle open of a deleted file
-.fuse_hidden*
-
-# KDE directory preferences
-.directory
-
-# Linux trash folder which might appear on any partition or disk
-.Trash-*
-
+### Below: created by https://www.gitignore.io/api/intellij,node,linux,windows ###
 
 ### Intellij ###
-# Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio and Webstorm
 
 *.iml
 
 ## Directory-based project format:
+
 .idea/
 
 ## File-based project format:
+
 *.ipr
 *.iws
 
@@ -43,8 +36,8 @@ crashlytics.properties
 crashlytics-build.properties
 fabric.properties
 
-
 ### Node ###
+
 # Logs
 logs
 *.log
@@ -71,6 +64,7 @@ coverage
 build/Release
 
 # Dependency directory
+# https://docs.npmjs.com/misc/faq#should-i-check-my-node-modules-folder-into-git
 node_modules
 
 # Optional npm cache directory
@@ -78,3 +72,34 @@ node_modules
 
 # Optional REPL history
 .node_repl_history
+
+### Linux ###
+
+*~
+
+# KDE directory preferences
+.directory
+
+# Linux trash folder which might appear on any partition or disk
+.Trash-*
+
+### Windows ###
+
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+# Folder config file
+Desktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# Windows Installer files
+*.cab
+*.msi
+*.msm
+*.msp
+
+# Windows shortcuts
+*.lnk
