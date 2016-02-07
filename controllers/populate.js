@@ -61,13 +61,13 @@ router.get('/', function (req, res) {
 	];
 
 	var items = [
-		{_id: ids[16], collection_id: ids[0], sequence: 0, title: 'It Follows', meta: {year: '2015', cover_image: 'it_follows_collection_cover.png'}},
-		{_id: ids[17], collection_id: ids[0], sequence: 0, title: 'Yes Man', meta: {year: '2015', cover_image: 'yes_man_collection_cover.png'}},
-		{_id: ids[18], collection_id: ids[0], sequence: 0, title: 'Hot Fuzz', meta: {year: '2015', cover_image: 'hot_fuzz_collection_cover.png'}},
-		{_id: ids[19], collection_id: ids[0], sequence: 0, title: 'Deadpool', meta: {year: '2015', cover_image: 'deadpool_collection_cover.png'}},
-		{_id: ids[20], collection_id: ids[0], sequence: 0, title: 'Shaun of the Dead', meta: {year: '2015', cover_image: 'shaun_of_the_dead_collection_cover.png'}},
+		{_id: ids[16], collection_id: ids[0], sequence: 0, title: 'It Follows', meta: {year: '2014', cover_image: 'it_follows_collection_cover.png'}},
+		{_id: ids[17], collection_id: ids[0], sequence: 0, title: 'Yes Man', meta: {year: '2008', cover_image: 'yes_man_collection_cover.png'}},
+		{_id: ids[18], collection_id: ids[0], sequence: 0, title: 'Hot Fuzz', file: '/hdd/Films/Hot Fuzz (2007).mp4', meta: {year: '2007', cover_image: 'hot_fuzz_collection_cover.png'}},
+		{_id: ids[19], collection_id: ids[0], sequence: 0, title: 'Deadpool', meta: {year: '2016', cover_image: 'deadpool_collection_cover.png'}},
+		{_id: ids[20], collection_id: ids[0], sequence: 0, title: 'Shaun of the Dead', meta: {year: '2004', cover_image: 'shaun_of_the_dead_collection_cover.png'}},
 
-		{_id: ids[13], collection_id: ids[8], sequence: 1, title: 'Chuck vs. The Intersect', file: '/home/markormesher/test.avi'},
+		{_id: ids[13], collection_id: ids[8], sequence: 1, title: 'Chuck vs. The Intersect'},
 		{_id: ids[14], collection_id: ids[8], sequence: 2, title: 'Chuck vs. The Helicopter'},
 		{_id: ids[15], collection_id: ids[8], sequence: 3, title: 'Chuck vs. The Tango'}
 	];
