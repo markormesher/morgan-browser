@@ -27,6 +27,10 @@ module.exports = {
 			if (err || item.length != 1) return callback(null);
 			callback(item[0]);
 		});
-	}
+	},
+
+	// constants
+
+	PRIVATE_META: ['cover_image']
 
 };

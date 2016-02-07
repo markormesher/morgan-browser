@@ -23,7 +23,8 @@ router.get('/:id', function (req, res) {
 				activePage: 'collections',
 				title: 'Item'
 			},
-			item: item
+			item: item,
+			Item: Item
 		});
 	});
 });

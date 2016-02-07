@@ -21,8 +21,9 @@ block body_full_width
 					| &nbsp;&nbsp;Play
 
 				each value, key in item.meta
-					- key = key.substr(0, 1).toUpperCase() + key.substr(1)
-					p #[strong #{key}:] #{value}
+					if (Item.PRIVATE_META.indexOf(key) == -1)
+						- key = key.substr(0, 1).toUpperCase() + key.substr(1)
+						p #[strong #{key}:] #{value}
 
 block scripts
 	script(src = '/items/js/items.js')
