@@ -14,7 +14,7 @@ mongoose = require('mongoose');
 // Database connections //
 //////////////////////////
 
-mongoose.connect('mongodb://localhost/morgan-browser');
+mongoose.connect('mongodb://10.0.1.8:27017/morgan-browser');
 
 //////////////////////////
 // Express + Middleware //

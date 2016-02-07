@@ -42,7 +42,7 @@ router.post('/play/:id', function (req, res) {
 		}
 
 		// open VLC
-		spawn('omxplayer -d "' + item.file + '" > /dev/tty0');
+		spawn('omxplayer -d "' + item.file + '"');
 	});
 });
 
