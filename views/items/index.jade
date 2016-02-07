@@ -9,7 +9,7 @@ block body_full_width
 	div.container
 		div.row
 			div.col-md-3.img-column
-				img(src = 'http://sidds.supplies/g/200/280').item-cover
+				+randomCoverImage(220, 280, {'class': 'item-cover'})
 
 			div.col-md-9.text-column
 				h1= item.title

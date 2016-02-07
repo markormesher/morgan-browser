@@ -4,9 +4,6 @@ block head
 	link(rel = 'stylesheet', href = '/collections/css/collections.css')
 
 block body
-	- var i = 0;
-	- var imgs = ['http://sidds.supplies/g/200/280', 'http://manoj.management/g/200/280', 'http://placekitty.artisan.io/g/200/280', 'http://place.ppd.io/g/200/280'];
-
 	if collection == null
 		h1 Library
 	else
@@ -29,7 +26,7 @@ block body
 					if (collection.meta.cover_image)
 						img(src = '/uploaded/' + collection.meta.cover_image).item-cover
 					else
-						img(src = imgs[++i % imgs.length]).item-cover
+						+randomCoverImage(220, 280, {'class': 'item-cover'})
 
 				a(href = '/collections/' + collection._id)
 					p= collection.title
@@ -38,7 +35,10 @@ block body
 		each item in child_items
 			div.col-md-3.item
 				a(href = '/items/' + item._id)
-					img(src = imgs[++i % imgs.length]).item-cover
+					if (item.meta.cover_image)
+						img(src = '/uploaded/' + item.meta.cover_image).item-cover
+					else
+						+randomCoverImage(220, 280, {'class': 'item-cover'})
 
 				a(href = '/items/' + item._id)
 					p= item.title
