@@ -13,6 +13,7 @@ module.exports = {
 			},
 			sequence: Number,
 			title: String,
+			file: String,
 			meta: {
 				type: Object,
 				default: {}

@@ -67,7 +67,7 @@ router.get('/', function (req, res) {
 		{_id: ids[19], collection_id: ids[0], sequence: 0, title: 'Deadpool', meta: {year: '2015'}},
 		{_id: ids[20], collection_id: ids[0], sequence: 0, title: 'Shaun of the Dead', meta: {year: '2015'}},
 
-		{_id: ids[13], collection_id: ids[8], sequence: 1, title: 'Chuck vs. The Intersect'},
+		{_id: ids[13], collection_id: ids[8], sequence: 1, title: 'Chuck vs. The Intersect', file: '/home/markormesher/test.avi'},
 		{_id: ids[14], collection_id: ids[8], sequence: 2, title: 'Chuck vs. The Helicopter'},
 		{_id: ids[15], collection_id: ids[8], sequence: 3, title: 'Chuck vs. The Tango'}
 	];
