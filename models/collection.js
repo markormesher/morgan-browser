@@ -1,9 +1,9 @@
-var mongoose = require('mongoose');
-var Schema = require('mongoose/lib/schema');
+var mongoose = require('mongoose'),
+	Schema = require('mongoose/lib/schema'),
+	rfr = require('rfr');
 
 module.exports = {
 
-	// code model
 	Model: mongoose.model(
 		'Collection',
 		{
@@ -11,13 +11,19 @@ module.exports = {
 				type: Schema.Types.ObjectId,
 				ref: 'Collection'
 			},
-			title: String
+			title: String,
+			meta: {
+				type: Object,
+				default: {}
+			}
 		}
 	),
 
-	get: function(id, callback) {
-		this.Model.find({_id: id}, function(err, result) {
-			callback(err || result.length != 1 ? null : result[0]);
+	get: function (id, callback) {
+		// get collection
+		this.Model.find({_id: id}, function (err, collection) {
+			if (err || collection.length != 1) return callback(null);
+			callback(collection[0]);
 		});
 	}
 

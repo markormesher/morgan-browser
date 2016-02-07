@@ -8,8 +8,7 @@ var express = require('express'),
 // models
 
 var Collection = rfr('./models/collection'),
-	Item = rfr('./models/item'),
-	ItemMeta = rfr('./models/item_meta');
+	Item = rfr('./models/item');
 
 // routes
 
@@ -46,8 +45,8 @@ router.get('/', function (req, res) {
 		{_id: ids[1], parent_id: null, title: 'TV'},
 
 		// shows
-		{_id: ids[2], parent_id: ids[1], title: 'Chuck'},
-		{_id: ids[3], parent_id: ids[1], title: 'Supernatural'},
+		{_id: ids[2], parent_id: ids[1], title: 'Chuck', meta: {cover_image: 'chuck_collection_cover.png'}},
+		{_id: ids[3], parent_id: ids[1], title: 'Supernatural', meta: {cover_image: 'supernatural_collection_cover.png'}},
 		{_id: ids[4], parent_id: ids[1], title: 'Scrubs'},
 		{_id: ids[5], parent_id: ids[1], title: 'Hustle'},
 		{_id: ids[6], parent_id: ids[1], title: 'Dexter'},
@@ -62,23 +61,15 @@ router.get('/', function (req, res) {
 	];
 
 	var items = [
-		{_id: ids[16], collection_id: ids[0], sequence: 0, title: 'It Follows'},
-		{_id: ids[17], collection_id: ids[0], sequence: 0, title: 'Yes Man'},
-		{_id: ids[18], collection_id: ids[0], sequence: 0, title: 'Hot Fuzz'},
-		{_id: ids[19], collection_id: ids[0], sequence: 0, title: 'Deadpool'},
-		{_id: ids[20], collection_id: ids[0], sequence: 0, title: 'Shaun of the Dead'},
+		{_id: ids[16], collection_id: ids[0], sequence: 0, title: 'It Follows', meta: {year: '2015'}},
+		{_id: ids[17], collection_id: ids[0], sequence: 0, title: 'Yes Man', meta: {year: '2015'}},
+		{_id: ids[18], collection_id: ids[0], sequence: 0, title: 'Hot Fuzz', meta: {year: '2015'}},
+		{_id: ids[19], collection_id: ids[0], sequence: 0, title: 'Deadpool', meta: {year: '2015'}},
+		{_id: ids[20], collection_id: ids[0], sequence: 0, title: 'Shaun of the Dead', meta: {year: '2015'}},
 
 		{_id: ids[13], collection_id: ids[8], sequence: 1, title: 'Chuck vs. The Intersect'},
 		{_id: ids[14], collection_id: ids[8], sequence: 2, title: 'Chuck vs. The Helicopter'},
 		{_id: ids[15], collection_id: ids[8], sequence: 3, title: 'Chuck vs. The Tango'}
-	];
-
-	var item_meta = [
-		{item_id: ids[16], key: 'year', value: '2015'},
-		{item_id: ids[17], key: 'year', value: '2008'},
-		{item_id: ids[18], key: 'year', value: '2007'},
-		{item_id: ids[19], key: 'year', value: '2016'},
-		{item_id: ids[20], key: 'year', value: '2004'}
 	];
 
 	async.series([
@@ -93,22 +84,12 @@ router.get('/', function (req, res) {
 			});
 		},
 		function (c) {
-			ItemMeta.Model.remove({}, function (err) {
-				c(err, 0)
-			});
-		},
-		function (c) {
 			Collection.Model.insertMany(collections, function (err) {
 				c(err, 0);
 			});
 		},
 		function (c) {
 			Item.Model.insertMany(items, function (err) {
-				c(err, 0);
-			});
-		},
-		function (c) {
-			ItemMeta.Model.insertMany(item_meta, function (err) {
 				c(err, 0);
 			});
 		}

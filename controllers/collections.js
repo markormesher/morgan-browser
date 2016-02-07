@@ -9,8 +9,7 @@ var express = require('express'),
 // models
 
 var Collection = rfr('./models/collection'),
-	Item = rfr('./models/item'),
-	ItemMeta = rfr('./models/item_meta');
+	Item = rfr('./models/item');
 
 // routes
 

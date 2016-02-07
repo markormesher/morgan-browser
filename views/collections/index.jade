@@ -26,7 +26,10 @@ block body
 		each collection in child_collections
 			div.col-md-3.collection
 				a(href = '/collections/' + collection._id)
-					img(src = imgs[++i % imgs.length]).item-cover
+					if (collection.meta.cover_image)
+						img(src = '/uploaded/' + collection.meta.cover_image).item-cover
+					else
+						img(src = imgs[++i % imgs.length]).item-cover
 
 				a(href = '/collections/' + collection._id)
 					p= collection.title
