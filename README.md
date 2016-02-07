@@ -5,4 +5,4 @@ A simple **media browser** for my Raspberry Pi, Morgan. Originally developed at 
 ## Contributors
 
 - [Mark Ormesher](https://github.com/markormesher)
-- [Ana Jalba](https://github.com.AnanaMJ)
+- [Ana Jalba](https://github.com/AnanaMJ)
