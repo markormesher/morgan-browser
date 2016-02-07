@@ -1,8 +1,12 @@
-// dependencies
+//////////////////
+// Dependencies //
+//////////////////
 
 var express = require('express');
 
-// routes
+////////////
+// Routes //
+////////////
 
 var router = express.Router();
 

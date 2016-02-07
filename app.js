@@ -3,18 +3,18 @@
 //////////////////
 
 var express = require('express'),
-rfr = require('rfr'),
-sassMiddleware = require('node-sass-middleware'),
-cookieParser = require('cookie-parser'),
-session = require('express-session'),
-flash = require('express-flash'),
-mongoose = require('mongoose');
+	rfr = require('rfr'),
+	sassMiddleware = require('node-sass-middleware'),
+	cookieParser = require('cookie-parser'),
+	session = require('express-session'),
+	flash = require('express-flash'),
+	mongoose = require('mongoose');
 
 //////////////////////////
 // Database connections //
 //////////////////////////
 
-mongoose.connect('mongodb://10.0.1.8:27017/morgan-browser');
+mongoose.connect('mongodb://localhost:27017/morgan-browser');
 
 //////////////////////////
 // Express + Middleware //
@@ -53,7 +53,9 @@ for (var stem in routes) {
 }
 
 // stop favicon requests
-app.use('/favicon.ico', function(req, res) { res.end(); });
+app.use('/favicon.ico', function (req, res) {
+	res.end();
+});
 
 ///////////
 // Views //
@@ -86,4 +88,3 @@ app.use(function (err, req, res, next) {
 ////////////
 
 app.listen(3000);
-

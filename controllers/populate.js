@@ -1,16 +1,22 @@
-// dependencies
+//////////////////
+// Dependencies //
+//////////////////
 
 var express = require('express'),
 	rfr = require('rfr'),
 	mongoose = require('mongoose'),
 	async = require('async');
 
-// models
+////////////
+// Models //
+////////////
 
 var Collection = rfr('./models/collection'),
 	Item = rfr('./models/item');
 
-// routes
+////////////
+// Routes //
+////////////
 
 var router = express.Router();
 

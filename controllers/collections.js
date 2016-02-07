@@ -1,17 +1,22 @@
-// dependencies
+//////////////////
+// Dependencies //
+//////////////////
 
 var express = require('express'),
 	rfr = require('rfr'),
 	mongoose = require('mongoose'),
-	async = require('async'),
-	helpers = rfr('./helpers/helpers');
+	async = require('async');
 
-// models
+////////////
+// Models //
+////////////
 
 var Collection = rfr('./models/collection'),
 	Item = rfr('./models/item');
 
-// routes
+////////////
+// Routes //
+////////////
 
 var router = express.Router();
 
@@ -78,12 +83,15 @@ router.get('/:id?', function (req, res) {
 
 	}, function (err, results) {
 		// check errors
-		if (err) console.log(err);
-		if (err == 'not found') {
-			return helpers.errorRedirect(req, res, '/collections', 'Could not load collection');
-		} else if (err) {
-			// TODO: fix this
-			return helpers.errorRedirect(req, res, '/', 'Something went wrong!');
+		if (err) {
+			if (err == 'not found') {
+				req.flash('error', 'Could not load collection');
+				res.writeHead(302, {Location: '/collections'})
+			} else {
+				req.flash('error', 'Collections could not be loaded!');
+				res.writeHead(302, {Location: '/'})
+			}
+			return res.end();
 		}
 
 		// render collections
