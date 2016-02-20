@@ -1,8 +1,9 @@
 var mongoose = require('mongoose'),
-	Schema = require('mongoose/lib/schema'),
-	rfr = require('rfr');
+	Schema = require('mongoose/lib/schema');
 
 module.exports = {
+
+	// model
 
 	Model: mongoose.model(
 		'Collection',
@@ -18,6 +19,8 @@ module.exports = {
 			}
 		}
 	),
+
+	// manager
 
 	get: function (id, callback) {
 		// get collection

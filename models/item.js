@@ -3,6 +3,8 @@ var mongoose = require('mongoose'),
 
 module.exports = {
 
+	// model
+
 	Model: mongoose.model(
 		'Item',
 		{
@@ -19,6 +21,8 @@ module.exports = {
 			}
 		}
 	),
+
+	// managers
 
 	get: function(id, callback) {
 		// get item

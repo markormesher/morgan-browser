@@ -1,5 +1,5 @@
-mixin randomCoverImage(width, height, attrs)
+mixin coverImage(src, attrs)
 	- attrs = attrs || {}
-	- var imgs = ['http://sidds.supplies/g/', 'http://manoj.management/g/', 'http://placekitty.artisan.io/g/', 'http://place.ppd.io/g/'];
-	- var i = Math.round(Math.random() * imgs.length);
-	img(src = imgs[i % imgs.length] + width.toString() + '/' + height.toString())&attributes(attrs)
+	div.item-or-collection-image
+		if (src)
+			img(src = src)&attributes(attrs)

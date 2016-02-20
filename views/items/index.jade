@@ -9,10 +9,7 @@ block body_full_width
 	div.container
 		div.row
 			div.col-md-3.img-column
-				if (item.meta.cover_image)
-					img(src = '/uploaded/' + item.meta.cover_image).item-cover
-				else
-					+randomCoverImage(220, 280, {'class': 'item-cover'})
+				+coverImage(item.meta.cover_image)
 
 			div.col-md-9.text-column
 				h1= item.title

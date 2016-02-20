@@ -23,22 +23,12 @@ block body
 		each collection in child_collections
 			div.col-md-3.collection
 				a(href = '/collections/' + collection._id)
-					if (collection.meta.cover_image)
-						img(src = '/uploaded/' + collection.meta.cover_image).item-cover
-					else
-						+randomCoverImage(220, 280, {'class': 'item-cover'})
-
-				a(href = '/collections/' + collection._id)
-					p= collection.title
+					+coverImage(collection.meta.cover_image)
+					p.item-or-collection-image-label= collection.title
 
 	div.row
 		each item in child_items
 			div.col-md-3.item
 				a(href = '/items/' + item._id)
-					if (item.meta.cover_image)
-						img(src = '/uploaded/' + item.meta.cover_image).item-cover
-					else
-						+randomCoverImage(220, 280, {'class': 'item-cover'})
-
-				a(href = '/items/' + item._id)
-					p= item.title
+					+coverImage(collection.meta.cover_image)
+					p.item-or-collection-image-label= item.title
