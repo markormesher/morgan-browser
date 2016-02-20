@@ -6,6 +6,7 @@ var Express = require('express');
 var Rfr = require('rfr');
 var Mongoose = require('mongoose');
 var Async = require('async');
+var Walk = require('walk');
 
 ////////////
 // Models //
@@ -15,12 +16,27 @@ var Collection = Rfr('./models/collection'),
 	Item = Rfr('./models/item');
 
 ////////////
-// Routes //`
+// Routes //
 ////////////
 
 var router = Express.Router();
 
-router.get('/', function (req, res) {
+router.get('/', function(req, res) {
+	var walker = Walk.walk('/home/markormesher/Videos', {});
+
+	var files = [];
+
+	walker.on('file', function(root, f, next) {
+		files.push(root + '/' + f.name);
+		next();
+	});
+
+	walker.on('end', function() {
+		res.json(files);
+	});
+});
+
+router.get('/manual', function (req, res) {
 	var ids = [
 		Mongoose.Types.ObjectId(),
 		Mongoose.Types.ObjectId(),
