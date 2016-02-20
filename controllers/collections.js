@@ -2,30 +2,29 @@
 // Dependencies //
 //////////////////
 
-var express = require('express'),
-	rfr = require('rfr'),
-	mongoose = require('mongoose'),
-	async = require('async');
+var Express = require('express');
+var Rfr = require('rfr');
+var Async = require('async');
 
 ////////////
 // Models //
 ////////////
 
-var Collection = rfr('./models/collection'),
-	Item = rfr('./models/item');
+var Collection = Rfr('./models/collection');
+var Item = Rfr('./models/item');
 
 ////////////
 // Routes //
 ////////////
 
-var router = express.Router();
+var router = Express.Router();
 
 router.get('/:id?', function (req, res) {
 	// collection id
 	var id = req.params.id;
 
 	// async tasks
-	async.parallel({
+	Async.parallel({
 
 		// get the collection "in focus"
 		collection: function (c) {

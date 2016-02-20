@@ -2,13 +2,13 @@
 // Dependencies //
 //////////////////
 
-var express = require('express');
+var Express = require('express');
 
 ////////////
 // Routes //
 ////////////
 
-var router = express.Router();
+var router = Express.Router();
 
 router.get('/', function (req, res) {
 	res.render('settings/index', {

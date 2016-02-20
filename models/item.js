@@ -1,11 +1,12 @@
-var mongoose = require('mongoose'),
-	Schema = require('mongoose/lib/schema');
+var Mongoose = require('mongoose');
+var Schema = require('mongoose/lib/schema');
+var Async = require('async');
 
 module.exports = {
 
 	// model
 
-	Model: mongoose.model(
+	Model: Mongoose.model(
 		'Item',
 		{
 			collection_id: {

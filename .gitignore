@@ -1,10 +1,9 @@
-### Titanic ###
+### Project-specific ###
 
 # Ignore CSS (commit the SCSS instead)
 *.css
 !public/_vendor/css/*
-
-### Below: created by https://www.gitignore.io/api/intellij,node,linux,windows ###
+helpers/secrets.js
 
 ### Intellij ###
 
@@ -35,6 +34,7 @@ com_crashlytics_export_strings.xml
 crashlytics.properties
 crashlytics-build.properties
 fabric.properties
+
 
 ### Node ###
 
@@ -73,6 +73,7 @@ node_modules
 # Optional REPL history
 .node_repl_history
 
+
 ### Linux ###
 
 *~
@@ -82,6 +83,7 @@ node_modules
 
 # Linux trash folder which might appear on any partition or disk
 .Trash-*
+
 
 ### Windows ###
 

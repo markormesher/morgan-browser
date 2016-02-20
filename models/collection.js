@@ -1,11 +1,11 @@
-var mongoose = require('mongoose'),
-	Schema = require('mongoose/lib/schema');
+var Mongoose = require('mongoose');
+var Schema = require('mongoose/lib/schema');
 
 module.exports = {
 
 	// model
 
-	Model: mongoose.model(
+	Model: Mongoose.model(
 		'Collection',
 		{
 			parent_id: {

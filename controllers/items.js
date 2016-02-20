@@ -2,21 +2,21 @@
 // Dependencies //
 //////////////////
 
-var express = require('express'),
-	rfr = require('rfr'),
-	spawn = require('child_process').spawn;
+var Express = require('express');
+var Rfr = require('rfr');
+var Spawn = require('child_process').spawn;
 
 ////////////
 // Models //
 ////////////
 
-var Item = rfr('./models/item');
+var Item = Rfr('./models/item');
 
 ////////////
 // Routes //
 ////////////
 
-var router = express.Router();
+var router = Express.Router();
 
 router.get('/:id', function (req, res) {
 	// item id
@@ -48,7 +48,7 @@ router.post('/play/:id', function (req, res) {
 		}
 
 		// open VLC
-		spawn('omxplayer', ['-d', item.file]);
+		Spawn('omxplayer', ['-d', item.file]);
 	});
 });
 

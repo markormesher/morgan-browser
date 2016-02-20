@@ -2,50 +2,53 @@
 // Dependencies //
 //////////////////
 
-var express = require('express'),
-	rfr = require('rfr'),
-	sassMiddleware = require('node-sass-middleware'),
-	cookieParser = require('cookie-parser'),
-	session = require('express-session'),
-	flash = require('express-flash'),
-	mongoose = require('mongoose');
+var Express = require('express');
+var Rfr = require('rfr');
+var SassMiddleware = require('node-sass-middleware');
+var CookieParser = require('cookie-parser');
+var Session = require('express-session');
+var Flash = require('express-flash');
+var Mongoose = require('mongoose');
+
+var Constants = Rfr('./helpers/constants');
+var Secrets = Rfr('./helpers/secrets');
 
 //////////////////////////
 // Database connections //
 //////////////////////////
 
-mongoose.connect('mongodb://localhost:27017/morgan-browser');
+Mongoose.connect('mongodb://localhost:27017/morgan-browser');
 
 //////////////////////////
 // Express + Middleware //
 //////////////////////////
 
-var app = express();
+var app = Express();
 
-app.use(sassMiddleware({
+app.use(SassMiddleware({
 	src: __dirname + '/assets/',
 	dest: __dirname + '/public/',
 	outputStyle: 'compressed'
 }));
-app.use(cookieParser('morgan-browser'));
-app.use(session({
-	secret: '6e227dd1-fad3-4c8c-b947-4c890d37b4e3',
+app.use(CookieParser(Secrets.COOKIE_SECRET));
+app.use(Session({
+	secret: Secrets.SESSION_SECRET,
 	resave: false,
 	saveUninitialized: true
 }));
-app.use(flash());
+app.use(Flash());
 
 ////////////
 // Routes //
 ////////////
 
 var routes = {
-	'/': rfr('./controllers/root'),
-	'/dashboard': rfr('./controllers/dashboard'),
-	'/populate': rfr('./controllers/populate'),
-	'/collections': rfr('./controllers/collections'),
-	'/items': rfr('./controllers/items'),
-	'/settings': rfr('./controllers/settings')
+	'/': Rfr('./controllers/root'),
+	'/dashboard': Rfr('./controllers/dashboard'),
+	'/populate': Rfr('./controllers/populate'),
+	'/collections': Rfr('./controllers/collections'),
+	'/items': Rfr('./controllers/items'),
+	'/settings': Rfr('./controllers/settings')
 };
 
 for (var stem in routes) {
@@ -63,7 +66,7 @@ app.use('/favicon.ico', function (req, res) {
 
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
-app.use(express.static(__dirname + '/public'));
+app.use(Express.static(__dirname + '/public'));
 
 ////////////
 // Errors //
@@ -87,4 +90,4 @@ app.use(function (err, req, res, next) {
 // Start! //
 ////////////
 
-app.listen(3000);
+app.listen(Constants.EXPRESS_PORT);

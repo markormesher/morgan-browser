@@ -2,47 +2,47 @@
 // Dependencies //
 //////////////////
 
-var express = require('express'),
-	rfr = require('rfr'),
-	mongoose = require('mongoose'),
-	async = require('async');
+var Express = require('express');
+var Rfr = require('rfr');
+var Mongoose = require('mongoose');
+var Async = require('async');
 
 ////////////
 // Models //
 ////////////
 
-var Collection = rfr('./models/collection'),
-	Item = rfr('./models/item');
+var Collection = Rfr('./models/collection'),
+	Item = Rfr('./models/item');
 
 ////////////
-// Routes //
+// Routes //`
 ////////////
 
-var router = express.Router();
+var router = Express.Router();
 
 router.get('/', function (req, res) {
 	var ids = [
-		mongoose.Types.ObjectId(),
-		mongoose.Types.ObjectId(),
-		mongoose.Types.ObjectId(),
-		mongoose.Types.ObjectId(),
-		mongoose.Types.ObjectId(),
-		mongoose.Types.ObjectId(),
-		mongoose.Types.ObjectId(),
-		mongoose.Types.ObjectId(),
-		mongoose.Types.ObjectId(),
-		mongoose.Types.ObjectId(),
-		mongoose.Types.ObjectId(),
-		mongoose.Types.ObjectId(),
-		mongoose.Types.ObjectId(),
-		mongoose.Types.ObjectId(),
-		mongoose.Types.ObjectId(),
-		mongoose.Types.ObjectId(),
-		mongoose.Types.ObjectId(),
-		mongoose.Types.ObjectId(),
-		mongoose.Types.ObjectId(),
-		mongoose.Types.ObjectId(),
-		mongoose.Types.ObjectId()
+		Mongoose.Types.ObjectId(),
+		Mongoose.Types.ObjectId(),
+		Mongoose.Types.ObjectId(),
+		Mongoose.Types.ObjectId(),
+		Mongoose.Types.ObjectId(),
+		Mongoose.Types.ObjectId(),
+		Mongoose.Types.ObjectId(),
+		Mongoose.Types.ObjectId(),
+		Mongoose.Types.ObjectId(),
+		Mongoose.Types.ObjectId(),
+		Mongoose.Types.ObjectId(),
+		Mongoose.Types.ObjectId(),
+		Mongoose.Types.ObjectId(),
+		Mongoose.Types.ObjectId(),
+		Mongoose.Types.ObjectId(),
+		Mongoose.Types.ObjectId(),
+		Mongoose.Types.ObjectId(),
+		Mongoose.Types.ObjectId(),
+		Mongoose.Types.ObjectId(),
+		Mongoose.Types.ObjectId(),
+		Mongoose.Types.ObjectId()
 	];
 
 	var collections = [
@@ -78,7 +78,7 @@ router.get('/', function (req, res) {
 		{_id: ids[15], collection_id: ids[8], sequence: 3, title: 'Chuck vs. The Tango'}
 	];
 
-	async.series([
+	Async.series([
 		function (c) {
 			Collection.Model.remove({}, function (err) {
 				c(err, 0)
