@@ -10,14 +10,26 @@ block body
 		h1= collection.title
 
 	p.subtitle
+		//- root
 		i.fa.fa-folder.text-highlighted
 		| &nbsp;&nbsp;
 		a(href = '/library/')= 'Home'
+
+		//- breadcrumb chain
 		each breadcrumb in breadcrumbs
 			| &nbsp;&nbsp;
 			i.fa.fa-angle-right.text-highlighted
 			| &nbsp;&nbsp;
 			a(href = '/library/' + breadcrumb._id)= breadcrumb.title
+
+		//- last link icons
+		if collection != null
+			| &nbsp;&nbsp;
+			a(href = '/library/edit/' + collection._id)
+				i.fa.fa-pencil.text-very-muted
+			| &nbsp;&nbsp;
+			a(href = '/library/delete/' + collection._id).confirm-delete
+				i.fa.fa-trash-o.text-very-muted
 
 	div.row
 		each collection in child_collections
@@ -33,10 +45,10 @@ block body
 					+coverImage(item.meta.cover_image)
 					p.item-or-collection-image-label= item.title
 
-	if (child_collections.length == 0 && child_items.length == 0)
-		div.row: div.col-md-12.alert.alert-info
-			p #[strong Sorry], this collection is empty!
-			p: a(href = 'javascript: window.history.back();').btn.btn-info
-				i.fa.fa-reply
-				| &nbsp;&nbsp;
-				| Go back
+	if child_collections.length == 0 && child_items.length == 0
+		div.row: div.col-md-12
+			p.text-center #[strong Sorry], this collection is empty!
+
+block scripts
+	+plugin_bootbox
+	script(src = '/_shared/js/confirm-delete.js')

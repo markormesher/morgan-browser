@@ -25,7 +25,7 @@ var exp = {
 
 	// managers
 
-	get: function(inputQuery, callback) {
+	$buildQuery: function(inputQuery, callback) {
 		// build query using waterfall method, then execute at the end
 		Async.waterfall(
 			[
@@ -48,27 +48,36 @@ var exp = {
 						query.collection_id = inputQuery.collection_id;
 					}
 					c(null, query);
-				},
-
-				// run the query
-				function (query, c) {
-					exp.Model.find(query).sort([['sequence', 1], ['title', 1]]).exec(function(err, items) {
-						if (err) return c('error');
-
-						// parse result if necessary
-						var result = items;
-						if (inputQuery.hasOwnProperty('$single') && inputQuery.$single) {
-							result = result.length ? result[0] : null;
-						}
-
-						callback(null, result);
-					});
 				}
 			],
-			function errorCallback() {
-				callback('Could not load item(s)')
-			}
+			callback
 		);
+	},
+
+	get: function(inputQuery, callback) {
+		exp.$buildQuery(inputQuery, function(err, query) {
+			if (err || !query) return callback('Could not parse query');
+
+			exp.Model.find(query).sort([['sequence', 1], ['title', 1]]).exec(function(err, items) {
+				if (err) return callback('error');
+
+				// parse result if necessary
+				var result = items;
+				if (inputQuery.hasOwnProperty('$single') && inputQuery.$single) {
+					result = result.length ? result[0] : null;
+				}
+
+				callback(null, result);
+			});
+		});
+	},
+
+	remove: function(inputQuery, callback) {
+		exp.$buildQuery(inputQuery, function(err, query) {
+			if (err || !query) return callback('Could not parse query');
+
+			exp.Model.find(query).remove(callback);
+		});
 	},
 
 	// constants

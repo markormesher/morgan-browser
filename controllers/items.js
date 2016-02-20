@@ -18,6 +18,23 @@ var Item = Rfr('./models/item');
 
 var router = Express.Router();
 
+router.get('/delete/:id', function(req, res) {
+	// item id
+	var id = req.params.id;
+
+	// delete the item
+	Item.remove({id: id}, function(err) {
+		if (err) {
+			req.flash('error', 'Could not remove item');
+		} else {
+			req.flash('success', 'Item deleted');
+		}
+
+		res.writeHead(302, {Location: '/library'});
+		res.end();
+	});
+});
+
 router.get('/:id', function (req, res) {
 	// item id
 	var id = req.params.id;

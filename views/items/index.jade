@@ -16,9 +16,15 @@ block body_full_width
 
 				p &nbsp;
 
-				p: button.btn.btn-success.btn-lg.play-btn(data-id= item.id)
-					i.fa.fa-play
-					| &nbsp;&nbsp;Play
+				p.btn-group
+					button(data-id= item.id).btn.btn-success.btn-lg.play-btn
+						i.fa.fa-play
+						| &nbsp;&nbsp;
+						| Play
+					a(href = '/items/edit/' + item._id).btn.btn-lg.btn-default
+						i.fa.fa-pencil
+					a(href = '/items/delete/' + item._id).btn.btn-lg.btn-default.confirm-delete
+						i.fa.fa-trash-o
 
 				each value, key in item.meta
 					if (Item.PRIVATE_META.indexOf(key) == -1)
@@ -26,4 +32,6 @@ block body_full_width
 						p #[strong #{key}:] #{value}
 
 block scripts
+	+plugin_bootbox
+	script(src = '/_shared/js/confirm-delete.js')
 	script(src = '/items/js/items.js')

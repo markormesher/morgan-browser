@@ -19,6 +19,23 @@ var Item = Rfr('./models/item');
 
 var router = Express.Router();
 
+router.get('/delete/:id', function(req, res) {
+	// collection id
+	var id = req.params.id;
+
+	// delete the collection
+	Collection.remove({id: id}, function(err) {
+		if (err) {
+			req.flash('error', 'Could not remove collection');
+		} else {
+			req.flash('success', 'Collection deleted');
+		}
+
+		res.writeHead(302, {Location: '/library'});
+		res.end();
+	});
+});
+
 router.get('/:id?', function (req, res) {
 	// collection id
 	var id = req.params.id;
@@ -85,7 +102,7 @@ router.get('/:id?', function (req, res) {
 		if (err) {
 			if (err == 'not found') {
 				req.flash('error', 'Could not load collection');
-				res.writeHead(302, {Location: '/collections'})
+				res.writeHead(302, {Location: '/library'})
 			} else {
 				req.flash('error', 'Collections could not be loaded!');
 				res.writeHead(302, {Location: '/'})
