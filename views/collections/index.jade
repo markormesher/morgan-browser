@@ -30,5 +30,5 @@ block body
 		each item in child_items
 			div.col-md-3.item
 				a(href = '/items/' + item._id)
-					+coverImage(collection.meta.cover_image)
+					+coverImage(item.meta.cover_image)
 					p.item-or-collection-image-label= item.title

@@ -23,7 +23,13 @@ router.get('/:id', function (req, res) {
 	var id = req.params.id;
 
 	// get item
-	Item.get(id, function (item) {
+	Item.get({id: id, single: true}, function (err, item) {
+		if (err || !item) {
+			req.flash('error', 'Could not load item');
+			res.writeHead(302, {Location: '/collections'});
+			return res.end();
+		}
+
 		res.render('items/index', {
 			_: {
 				activePage: 'collections',
@@ -40,8 +46,8 @@ router.post('/play/:id', function (req, res) {
 	var id = req.params.id;
 
 	// get item
-	Item.get(id, function (item) {
-		if (item == null) {
+	Item.get({id: id, single: true}, function (err, item) {
+		if (err || !item) {
 			res.status(404);
 			res.end();
 			return;

@@ -29,22 +29,22 @@ router.get('/:id?', function (req, res) {
 		// get the collection "in focus"
 		collection: function (c) {
 			if (id == null) return c(null, null);
-			Collection.get(id, function (result) {
-				if (result == null) return c('not found', null);
+			Collection.get({id: id, single: true}, function (err, result) {
+				if (err || !result) return c('not found', null);
 				c(null, result);
 			});
 		},
 
 		// get child collections
 		child_collections: function (c) {
-			Collection.Model.find({parent_id: id}).sort({title: 'asc'}).exec(function (err, result) {
+			Collection.get({parent_id: id}, function (err, result) {
 				c(err, result);
 			});
 		},
 
 		// get child items
 		child_items: function (c) {
-			Item.Model.find({collection_id: id}).sort({sequence: 'asc'}).exec(function (err, result) {
+			Item.get({collection_id: id}, function (err, result) {
 				c(err, result);
 			});
 		},
@@ -56,8 +56,8 @@ router.get('/:id?', function (req, res) {
 
 			// load this collection
 			var breadcrumbs = [];
-			Collection.get(id, function (result) {
-				if (result == null) return c(null, null);
+			Collection.get({id: id, single: true}, function (err, result) {
+				if (err || !result) return c('not found', null);
 
 				// add to list
 				breadcrumbs.push(result);
@@ -70,8 +70,8 @@ router.get('/:id?', function (req, res) {
 					if (!lastCrumb.parent_id) return c(null, breadcrumbs.reverse());
 
 					// add the parent and loop
-					Collection.get(lastCrumb.parent_id, function (result) {
-						if (result == null) return c(err, null);
+					Collection.get({id: lastCrumb.parent_id, single: true}, function (err, result) {
+						if (err || !result) return c(err, null);
 						breadcrumbs.push(result);
 						addParent();
 					});
@@ -92,6 +92,8 @@ router.get('/:id?', function (req, res) {
 			}
 			return res.end();
 		}
+
+		console.log(results);
 
 		// render collections
 		res.render('collections/index', {
