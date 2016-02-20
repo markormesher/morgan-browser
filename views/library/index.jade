@@ -32,3 +32,11 @@ block body
 				a(href = '/items/' + item._id)
 					+coverImage(item.meta.cover_image)
 					p.item-or-collection-image-label= item.title
+
+	if (child_collections.length == 0 && child_items.length == 0)
+		div.row: div.col-md-12.alert.alert-info
+			p #[strong Sorry], this collection is empty!
+			p: a(href = 'javascript: window.history.back();').btn.btn-info
+				i.fa.fa-reply
+				| &nbsp;&nbsp;
+				| Go back
