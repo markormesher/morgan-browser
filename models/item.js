@@ -57,7 +57,7 @@ var exp = {
 
 						// parse result if necessary
 						var result = items;
-						if (inputQuery.hasOwnProperty('single') && inputQuery.single) {
+						if (inputQuery.hasOwnProperty('$single') && inputQuery.$single) {
 							result = result.length ? result[0] : null;
 						}
 

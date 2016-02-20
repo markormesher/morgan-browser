@@ -55,7 +55,7 @@ var exp = {
 
 						// parse result if necessary
 						var result = collections;
-						if (inputQuery.hasOwnProperty('single') && inputQuery.single) {
+						if (inputQuery.hasOwnProperty('$single') && inputQuery.$single) {
 							result = result.length ? result[0] : null;
 						}
 

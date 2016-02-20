@@ -29,7 +29,7 @@ router.get('/:id?', function (req, res) {
 		// get the collection "in focus"
 		collection: function (c) {
 			if (id == null) return c(null, null);
-			Collection.get({id: id, single: true}, function (err, result) {
+			Collection.get({id: id, $single: true}, function (err, result) {
 				if (err || !result) return c('not found', null);
 				c(null, result);
 			});
@@ -56,7 +56,7 @@ router.get('/:id?', function (req, res) {
 
 			// load this collection
 			var breadcrumbs = [];
-			Collection.get({id: id, single: true}, function (err, result) {
+			Collection.get({id: id, $single: true}, function (err, result) {
 				if (err || !result) return c('not found', null);
 
 				// add to list
@@ -70,7 +70,7 @@ router.get('/:id?', function (req, res) {
 					if (!lastCrumb.parent_id) return c(null, breadcrumbs.reverse());
 
 					// add the parent and loop
-					Collection.get({id: lastCrumb.parent_id, single: true}, function (err, result) {
+					Collection.get({id: lastCrumb.parent_id, $single: true}, function (err, result) {
 						if (err || !result) return c(err, null);
 						breadcrumbs.push(result);
 						addParent();
