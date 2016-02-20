@@ -1,0 +1,32 @@
+extends ../_shared/root-layout
+include ../_mixins/forms
+
+block head
+	link(rel = 'stylesheet', href = '/library/css/library.css')
+
+block body
+
+	- collection = collection || {}
+
+	h1= _.title
+
+	pre= JSON.stringify(parentOptions, null, 4)
+
+	div.row: div.col-md-6
+
+		form(action = '/library/edit/' + (collection._id || 0), method = 'post')
+
+			+form_fieldset
+				+form_label('title', 'Title')
+				+form_textInput('title', collection.name, {
+					'data-validation': 'required alphanumeric',
+					'data-validation-allowing': '._-'
+				})
+
+			+form_fieldset
+				+form_label('parent_id', 'Parent')
+				+form_dropdownInput('parent_id', parentOptions, collection.parent_id || null)
+
+block scripts
+	+plugin_bootbox
+	script(src = '/_shared/js/confirm-delete.js')

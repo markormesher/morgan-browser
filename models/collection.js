@@ -50,7 +50,6 @@ var exp = {
 			],
 			callback
 		);
-
 	},
 
 	get: function(inputQuery, callback) {

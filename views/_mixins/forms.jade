@@ -13,6 +13,12 @@ mixin form_longTextInput(field, value, attrs)
 	- attrs = attrs || {}
 	textarea.form-control(id = field, name = field)&attributes(attrs)= value
 
+mixin form_dropdownInput(field, options, value, attrs)
+	- attrs = attrs || {}
+	select.form-control(id = field, name = field)&attributes(attrs)
+		each opt in options
+			option(value = opt.value)= opt.label
+
 mixin form_switchCheckBox(field, title, attrs)
 	- attrs = attrs || {}
 	label(for = field, class = 'switch-checkbox')

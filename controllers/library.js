@@ -19,6 +19,55 @@ var Item = Rfr('./models/item');
 
 var router = Express.Router();
 
+router.get('/edit/:id?', function(req, res) {
+	// collection id
+	var id = req.params.id;
+	var editing = id != null;
+
+	Async.parallel(
+		{
+			collection: function (c) {
+				// creating something new
+				if (editing) return c(null, null);
+
+				// editing an existing collection
+				Collection.get({id: id, $single: true}, function(err, collection) {
+					if (err || !collection) {
+						return c('not found');
+					}
+
+					c(null, collection);
+				});
+			},
+			parentOptions: function (c) {
+				Collection.get({}, function(err, collections) {
+					if (err) return c(err);
+
+					// TODO: create structured output
+
+					c(null, []);
+				});
+			}
+		},
+		function (err, results) {
+			if (err) {
+				req.flash('error', 'Could not load collection');
+				res.writeHead(302, {Location: '/library'});
+				return res.end();
+			}
+
+			res.render('library/edit', {
+				_: {
+					activePage: 'library',
+					title: 'Edit Collection'
+				},
+				collection: results.collection,
+				parentOptions: results.parentOptions
+			});
+		}
+	);
+});
+
 router.get('/delete/:id', function(req, res) {
 	// collection id
 	var id = req.params.id;
