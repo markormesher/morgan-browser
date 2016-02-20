@@ -46,7 +46,7 @@ var routes = {
 	'/': Rfr('./controllers/root'),
 	'/dashboard': Rfr('./controllers/dashboard'),
 	'/populate': Rfr('./controllers/populate'),
-	'/collections': Rfr('./controllers/collections'),
+	'/library': Rfr('./controllers/library'),
 	'/items': Rfr('./controllers/items'),
 	'/settings': Rfr('./controllers/settings')
 };

@@ -96,10 +96,10 @@ router.get('/:id?', function (req, res) {
 		console.log(results);
 
 		// render collections
-		res.render('collections/index', {
+		res.render('library/index', {
 			_: {
-				activePage: 'collections',
-				title: 'Collections'
+				activePage: 'library',
+				title: 'Your Library'
 			},
 			collection: results.collection,
 			child_collections: results.child_collections,
