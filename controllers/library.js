@@ -22,13 +22,13 @@ var router = Express.Router();
 router.get('/edit/:id?', function(req, res) {
 	// collection id
 	var id = req.params.id;
-	var editing = id != null;
+	var creatingNew = id == undefined || id == null;
 
 	Async.parallel(
 		{
 			collection: function (c) {
 				// creating something new
-				if (editing) return c(null, null);
+				if (creatingNew) return c(null, null);
 
 				// editing an existing collection
 				Collection.get({id: id, $single: true}, function(err, collection) {
@@ -40,12 +40,32 @@ router.get('/edit/:id?', function(req, res) {
 				});
 			},
 			parentOptions: function (c) {
-				Collection.get({}, function(err, collections) {
+				Collection.getAllAsTree(function(err, collectionTree) {
 					if (err) return c(err);
 
-					// TODO: create structured output
+					// parse to output
+					var output = [{value: null, label: 'ROOT'}];
+					var parseOutput = function(rootArray, prefix) {
+						rootArray.forEach(function (collection) {
+							// add this node
+							output.push({
+								value: collection._id,
+								label: prefix + collection.title,
+								disabled: collection._id == id
+							});
 
-					c(null, []);
+							// add children
+							if (collection.$children.length > 0) {
+								parseOutput(
+									collection.$children,
+									prefix + collection.title + '&nbsp;&nbsp;&raquo;&nbsp;&nbsp;'
+								);
+							}
+						});
+					};
+					parseOutput(collectionTree, '');
+
+					c(null, output);
 				});
 			}
 		},
@@ -59,7 +79,7 @@ router.get('/edit/:id?', function(req, res) {
 			res.render('library/edit', {
 				_: {
 					activePage: 'library',
-					title: 'Edit Collection'
+					title: creatingNew ? 'Create Collection' : 'Edit Collection'
 				},
 				collection: results.collection,
 				parentOptions: results.parentOptions
@@ -158,8 +178,6 @@ router.get('/:id?', function (req, res) {
 			}
 			return res.end();
 		}
-
-		console.log(results);
 
 		// render collections
 		res.render('library/index', {

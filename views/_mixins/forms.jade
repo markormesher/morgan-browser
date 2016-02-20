@@ -17,7 +17,11 @@ mixin form_dropdownInput(field, options, value, attrs)
 	- attrs = attrs || {}
 	select.form-control(id = field, name = field)&attributes(attrs)
 		each opt in options
-			option(value = opt.value)= opt.label
+			option(
+			value = opt.value,
+			selected = opt.value == value ? 'selected' : undefined,
+			disabled = opt.disabled || undefined
+			)!= opt.label
 
 mixin form_switchCheckBox(field, title, attrs)
 	- attrs = attrs || {}
