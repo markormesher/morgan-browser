@@ -26,6 +26,7 @@ router.get('/edit/:id?', function(req, res) {
 
 	Async.parallel(
 		{
+			// load the collection to be edited
 			collection: function (c) {
 				// creating something new
 				if (creatingNew) return c(null, null);
@@ -39,6 +40,8 @@ router.get('/edit/:id?', function(req, res) {
 					c(null, collection);
 				});
 			},
+
+			// load the option list for "parent collection"
 			parentOptions: function (c) {
 				Collection.getAllAsTree(function(err, collectionTree) {
 					if (err) return c(err);
@@ -89,8 +92,7 @@ router.get('/edit/:id?', function(req, res) {
 });
 
 router.post('/edit/:id?', function(req, res) {
-	// TODO
-	res.json('Yeah, I haven\'t done this bit yet.');
+	res.json(req.body);
 });
 
 router.get('/delete/:id', function(req, res) {

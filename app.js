@@ -4,6 +4,7 @@
 
 var Express = require('express');
 var Rfr = require('rfr');
+var BodyParser = require('body-parser');
 var SassMiddleware = require('node-sass-middleware');
 var CookieParser = require('cookie-parser');
 var Session = require('express-session');
@@ -25,6 +26,7 @@ Mongoose.connect('mongodb://localhost:27017/morgan-browser');
 
 var app = Express();
 
+app.use(BodyParser.urlencoded({ extended: false }));
 app.use(SassMiddleware({
 	src: __dirname + '/assets/',
 	dest: __dirname + '/public/',
