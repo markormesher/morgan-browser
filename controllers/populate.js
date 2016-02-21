@@ -35,6 +35,7 @@ router.get('/', function(req, res) {
 		}
 
 		// walk through the ith directory, then recurse
+		var files = {};
 		var doWalk = function(i) {
 			var c = collections[i];
 			files[c._id] = [];
@@ -42,7 +43,9 @@ router.get('/', function(req, res) {
 			// walk through files
 			var walker = Walk.walk(c.file_path, {});
 			walker.on('file', function(root, f, next) {
-				files[c._id].push(root + '/' + f.name);
+				var fileName = root.replace(c.file_path, '') + '/' + f.name;
+				if (fileName.charAt(0) == '/') fileName = fileName.substr(1);
+				files[c._id].push(fileName);
 				next();
 			});
 
