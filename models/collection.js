@@ -14,6 +14,7 @@ var exp = {
 				ref: 'Collection'
 			},
 			title: String,
+			file_path: String,
 			meta: {
 				type: Object,
 				default: {}

@@ -44,7 +44,7 @@ router.get('/edit/:id?', function(req, res) {
 					if (err) return c(err);
 
 					// parse to output
-					var output = [{value: null, label: 'ROOT'}];
+					var output = [{value: '0', label: 'ROOT'}];
 					var parseOutput = function(rootArray, prefix) {
 						rootArray.forEach(function (collection) {
 							// add this node

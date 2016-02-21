@@ -25,9 +25,17 @@ block body
 				+form_label('parent_id', 'Parent')
 				+form_dropdownInput('parent_id', parentOptions, collection.parent_id || null)
 
+			+form_fieldset({class: 'file-path-group'})
+				+form_label('file_path', 'File Path')
+				+form_textInput('file_path', collection.file_path, {
+					'data-validation': 'required alphanumeric',
+					'data-validation-allowing': '._-/'
+				})
+
 			+form_fieldset
 				+form_button('Save', 'save', {'class': 'btn btn-success'})
 
 block scripts
 	+plugin_bootbox
 	script(src = '/_shared/js/confirm-delete.js')
+	script(src = '/collections/js/edit.js')
