@@ -88,6 +88,11 @@ router.get('/edit/:id?', function(req, res) {
 	);
 });
 
+router.post('/edit/:id?', function(req, res) {
+	// TODO
+	res.json('Yeah, I haven\'t done this bit yet.');
+});
+
 router.get('/delete/:id', function(req, res) {
 	// collection id
 	var id = req.params.id;
