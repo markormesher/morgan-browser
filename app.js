@@ -47,10 +47,9 @@ app.use(Flash());
 var routes = {
 	'/': Rfr('./controllers/root'),
 	'/dashboard': Rfr('./controllers/dashboard'),
-	'/populate': Rfr('./controllers/populate'),
+	'/maintenance': Rfr('./controllers/maintenance'),
 	'/collections': Rfr('./controllers/collections'),
-	'/items': Rfr('./controllers/items'),
-	'/settings': Rfr('./controllers/settings')
+	'/items': Rfr('./controllers/items')
 };
 
 for (var stem in routes) {

@@ -12,8 +12,9 @@ var Walk = require('walk');
 // Models //
 ////////////
 
-var Collection = Rfr('./models/collection'),
-	Item = Rfr('./models/item');
+var Collection = Rfr('./models/collection');
+var Config = Rfr('./models/config');
+var Item = Rfr('./models/item');
 
 ////////////
 // Routes //
@@ -22,6 +23,19 @@ var Collection = Rfr('./models/collection'),
 var router = Express.Router();
 
 router.get('/', function(req, res) {
+	// get all config
+	Config.get({}, function (err, configs) {
+		res.render('maintenance/index', {
+			_: {
+				activePage: 'maintenance',
+				title: 'Maintenance'
+			},
+			configs: configs
+		});
+	});
+});
+
+router.get('/scan', function(req, res) {
 	// get root collections
 	Collection.get({parent_id: null}, function(err, collections) {
 		if (err || !collections) {

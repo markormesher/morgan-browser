@@ -4,14 +4,10 @@ div.navigation
 			i.fa.fa-tv
 			span Dashboard
 
-		li: a(href = '/populate')
-			i.fa.fa-database
-			span Populate
-
 		li: a(href = '/collections', class = (_.activePage == 'collections' ? 'active' : ''))
 			i.fa.fa-film
 			span Library
 
-		li: a(href = '/settings', class = (_.activePage == 'settings' ? 'active' : ''))
-			i.fa.fa-gears
-			span Settings
+		li: a(href = '/maintenance', class = (_.activePage == 'maintenance' ? 'active' : ''))
+			i.fa.fa-wrench
+			span Maintenance

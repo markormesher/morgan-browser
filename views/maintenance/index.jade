@@ -1,0 +1,25 @@
+extends ../_shared/root-layout
+
+block body
+	h1 Maintenance
+
+	div.row
+
+		div.col-md-6
+
+			h2 Media Scan
+			p: em Last run: #{configs._media_scan_last_run || 'never'}
+			p: btn.btn.btn-default.btn-with-spinner#media-scan-now
+				| Run now
+				i.fa.fa-spinner.fa-pulse
+
+		div.col-md-6
+
+			h2 Orphan Removal
+			p: em Last run: #{configs._orphan_removal_last_run || 'never'}
+			p: btn.btn.btn-default.btn-with-spinner#orphan-removal-now
+				| Run now
+				i.fa.fa-spinner.fa-pulse
+
+block scripts
+	script(src = '/maintenance/js/maintenance.js')
