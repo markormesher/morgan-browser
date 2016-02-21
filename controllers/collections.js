@@ -81,7 +81,7 @@ router.get('/edit/:id?', function(req, res) {
 
 			res.render('collections/edit', {
 				_: {
-					activePage: 'library',
+					activePage: 'collections',
 					title: creatingNew ? 'Create Collection' : 'Edit Collection'
 				},
 				collection: results.collection,
