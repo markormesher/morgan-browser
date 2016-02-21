@@ -92,7 +92,22 @@ router.get('/edit/:id?', function(req, res) {
 });
 
 router.post('/edit/:id?', function(req, res) {
-	res.json(req.body);
+	// collection id and body
+	var collectionId = req.params.id;
+	var collectionBody = req.body;
+
+	// save
+	Collection.createOrUpdate(collectionId, collectionBody, function(err, savedCollectionId, createdNew) {
+		if (err) {
+			req.flash('error', 'Could not save collection');
+			res.writeHead(302, {Location: '/collections'});
+			return res.end();
+		}
+
+		req.flash('success', (createdNew ? 'Created' : 'Saved') + ' collection');
+		res.writeHead(302, {Location: '/collections/' + savedCollectionId});
+		return res.end();
+	});
 });
 
 router.get('/delete/:id', function(req, res) {

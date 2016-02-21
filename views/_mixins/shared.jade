@@ -1,5 +1,6 @@
-mixin coverImage(src, attrs)
+mixin coverImage(src, attrs, imgAttrs)
 	- attrs = attrs || {}
-	div.item-or-collection-image
+	- imgAttrs = imgAttrs || {}
+	div.item-or-collection-image&attributes(attrs)
 		if (src)
-			img(src = src)&attributes(attrs)
+			img(src = src)&attributes(imgAttrs)

@@ -118,6 +118,29 @@ var exp = {
 		});
 	},
 
+	createOrUpdate: function(id, newCollection, callback) {
+		// creating a new collection, or updating an existing one?
+		var createNew = false;
+		if (!id || id == '0') {
+			id = Mongoose.Types.ObjectId();
+			createNew = true;
+		}
+
+		// sanitise parent_id
+		if (!newCollection.parent_id || newCollection.parent_id == '0') {
+			newCollection.parent_id = null;
+		}
+
+		// file path only allowed for root collections
+		if (newCollection.parent_id != null) {
+			newCollection.file_path = null;
+		}
+
+		exp.Model.update({_id: id}, newCollection, {upsert: true}, function (err) {
+			callback(err, id, createNew);
+		});
+	},
+
 	remove: function(inputQuery, callback) {
 		exp.$buildQuery(inputQuery, function(err, query) {
 			if (err || !query) return callback('Could not parse query');
