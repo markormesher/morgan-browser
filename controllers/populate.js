@@ -22,104 +22,42 @@ var Collection = Rfr('./models/collection'),
 var router = Express.Router();
 
 router.get('/', function(req, res) {
-	var walker = Walk.walk('/home/markormesher/Videos', {});
-
-	var files = [];
-
-	walker.on('file', function(root, f, next) {
-		files.push(root + '/' + f.name);
-		next();
-	});
-
-	walker.on('end', function() {
-		res.json(files);
-	});
-});
-
-router.get('/manual', function (req, res) {
-	var ids = [
-		Mongoose.Types.ObjectId(),
-		Mongoose.Types.ObjectId(),
-		Mongoose.Types.ObjectId(),
-		Mongoose.Types.ObjectId(),
-		Mongoose.Types.ObjectId(),
-		Mongoose.Types.ObjectId(),
-		Mongoose.Types.ObjectId(),
-		Mongoose.Types.ObjectId(),
-		Mongoose.Types.ObjectId(),
-		Mongoose.Types.ObjectId(),
-		Mongoose.Types.ObjectId(),
-		Mongoose.Types.ObjectId(),
-		Mongoose.Types.ObjectId(),
-		Mongoose.Types.ObjectId(),
-		Mongoose.Types.ObjectId(),
-		Mongoose.Types.ObjectId(),
-		Mongoose.Types.ObjectId(),
-		Mongoose.Types.ObjectId(),
-		Mongoose.Types.ObjectId(),
-		Mongoose.Types.ObjectId(),
-		Mongoose.Types.ObjectId()
-	];
-
-	var collections = [
-		// root collections
-		{_id: ids[0], parent_id: null, title: 'Films'},
-		{_id: ids[1], parent_id: null, title: 'TV'},
-
-		// shows
-		{_id: ids[2], parent_id: ids[1], title: 'Chuck'},
-		{_id: ids[3], parent_id: ids[1], title: 'Supernatural'},
-		{_id: ids[4], parent_id: ids[1], title: 'Scrubs'},
-		{_id: ids[5], parent_id: ids[1], title: 'Hustle'},
-		{_id: ids[6], parent_id: ids[1], title: 'Dexter'},
-		{_id: ids[7], parent_id: ids[1], title: 'Warehouse 13'},
-
-		// chuck seasons
-		{_id: ids[8], parent_id: ids[2], title: 'Season 1'},
-		{_id: ids[9], parent_id: ids[2], title: 'Season 2'},
-		{_id: ids[10], parent_id: ids[2], title: 'Season 3'},
-		{_id: ids[11], parent_id: ids[2], title: 'Season 4'},
-		{_id: ids[12], parent_id: ids[2], title: 'Season 5'}
-	];
-
-	var items = [
-		{_id: ids[16], collection_id: ids[0], sequence: 0, title: 'It Follows', meta: {year: '2014'}},
-		{_id: ids[17], collection_id: ids[0], sequence: 0, title: 'Yes Man', meta: {year: '2008'}},
-		{_id: ids[18], collection_id: ids[0], sequence: 0, title: 'Hot Fuzz', meta: {year: '2007'}},
-		{_id: ids[19], collection_id: ids[0], sequence: 0, title: 'Deadpool', meta: {year: '2016'}},
-		{_id: ids[20], collection_id: ids[0], sequence: 0, title: 'Shaun of the Dead', meta: {year: '2004'}},
-
-		{_id: ids[13], collection_id: ids[8], sequence: 1, title: 'Chuck vs. The Intersect'},
-		{_id: ids[14], collection_id: ids[8], sequence: 2, title: 'Chuck vs. The Helicopter'},
-		{_id: ids[15], collection_id: ids[8], sequence: 3, title: 'Chuck vs. The Tango'}
-	];
-
-	Async.series([
-		function (c) {
-			Collection.Model.remove({}, function (err) {
-				c(err, 0)
-			});
-		},
-		function (c) {
-			Item.Model.remove({}, function (err) {
-				c(err, 0)
-			});
-		},
-		function (c) {
-			Collection.Model.insertMany(collections, function (err) {
-				c(err, 0);
-			});
-		},
-		function (c) {
-			Item.Model.insertMany(items, function (err) {
-				c(err, 0);
-			});
+	// get root collections
+	Collection.get({parent_id: null}, function(err, collections) {
+		if (err || !collections) {
+			res.status(500);
+			return res.end();
 		}
-	], function (err) {
-		if (err) return res.json(err);
-		req.flash('success', 'Done');
-		res.writeHead(301, {Location: '/'});
-		res.end();
+
+		// no roots?
+		if (!collections.length) {
+			return res.json('No roots');
+		}
+
+		// walk through the ith directory, then recurse
+		var doWalk = function(i) {
+			var c = collections[i];
+			files[c._id] = [];
+
+			// walk through files
+			var walker = Walk.walk(c.file_path, {});
+			walker.on('file', function(root, f, next) {
+				files[c._id].push(root + '/' + f.name);
+				next();
+			});
+
+			walker.on('end', function() {
+				if (i == collections.length - 1) {
+					// done
+					res.json(files);
+				} else {
+					// recurse
+					doWalk(i + 1);
+				}
+			});
+		};
+
+		doWalk(0);
 	});
 });
 
