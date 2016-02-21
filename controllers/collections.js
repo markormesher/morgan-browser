@@ -72,11 +72,11 @@ router.get('/edit/:id?', function(req, res) {
 		function (err, results) {
 			if (err) {
 				req.flash('error', 'Could not load collection');
-				res.writeHead(302, {Location: '/library'});
+				res.writeHead(302, {Location: '/collections'});
 				return res.end();
 			}
 
-			res.render('library/edit', {
+			res.render('collections/edit', {
 				_: {
 					activePage: 'library',
 					title: creatingNew ? 'Create Collection' : 'Edit Collection'
@@ -100,7 +100,7 @@ router.get('/delete/:id', function(req, res) {
 			req.flash('success', 'Collection deleted');
 		}
 
-		res.writeHead(302, {Location: '/library'});
+		res.writeHead(302, {Location: '/collections'});
 		res.end();
 	});
 });
@@ -171,7 +171,7 @@ router.get('/:id?', function (req, res) {
 		if (err) {
 			if (err == 'not found') {
 				req.flash('error', 'Could not load collection');
-				res.writeHead(302, {Location: '/library'})
+				res.writeHead(302, {Location: '/collections'})
 			} else {
 				req.flash('error', 'Collections could not be loaded!');
 				res.writeHead(302, {Location: '/'})
@@ -180,9 +180,9 @@ router.get('/:id?', function (req, res) {
 		}
 
 		// render collections
-		res.render('library/index', {
+		res.render('collections/index', {
 			_: {
-				activePage: 'library',
+				activePage: 'collections',
 				title: 'Your Library'
 			},
 			collection: results.collection,

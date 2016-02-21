@@ -2,7 +2,7 @@ extends ../_shared/root-layout
 include ../_mixins/forms
 
 block head
-	link(rel = 'stylesheet', href = '/library/css/library.css')
+	link(rel = 'stylesheet', href = '/collections/css/collections.css')
 
 block body
 
@@ -12,7 +12,7 @@ block body
 
 	div.row: div.col-md-6
 
-		form(action = '/library/edit/' + (collection._id || 0), method = 'post')
+		form(action = '/collections/edit/' + (collection._id || 0), method = 'post')
 
 			+form_fieldset
 				+form_label('title', 'Title')

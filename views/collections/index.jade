@@ -1,7 +1,7 @@
 extends ../_shared/root-layout
 
 block head
-	link(rel = 'stylesheet', href = '/library/css/library.css')
+	link(rel = 'stylesheet', href = '/collections/css/collections.css')
 
 block body
 	if collection == null
@@ -13,28 +13,28 @@ block body
 		//- root
 		i.fa.fa-folder.text-highlighted
 		| &nbsp;&nbsp;
-		a(href = '/library/')= 'Home'
+		a(href = '/collections')= 'Home'
 
 		//- breadcrumb chain
 		each breadcrumb in breadcrumbs
 			| &nbsp;&nbsp;
 			i.fa.fa-angle-right.text-highlighted
 			| &nbsp;&nbsp;
-			a(href = '/library/' + breadcrumb._id)= breadcrumb.title
+			a(href = '/collections/' + breadcrumb._id)= breadcrumb.title
 
 		//- last link icons
 		if collection != null
 			| &nbsp;&nbsp;
-			a(href = '/library/edit/' + collection._id)
+			a(href = '/collections/edit/' + collection._id)
 				i.fa.fa-pencil.text-very-muted
 			| &nbsp;&nbsp;
-			a(href = '/library/delete/' + collection._id).confirm-delete
+			a(href = '/collections/delete/' + collection._id).confirm-delete
 				i.fa.fa-trash-o.text-very-muted
 
 	div.row
 		each collection in child_collections
 			div.col-md-3.collection
-				a(href = '/library/' + collection._id)
+				a(href = '/collections/' + collection._id)
 					+coverImage(collection.meta.cover_image)
 					p.item-or-collection-image-label= collection.title
 

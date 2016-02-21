@@ -30,7 +30,7 @@ router.get('/delete/:id', function(req, res) {
 			req.flash('success', 'Item deleted');
 		}
 
-		res.writeHead(302, {Location: '/library'});
+		res.writeHead(302, {Location: '/collections'});
 		res.end();
 	});
 });
