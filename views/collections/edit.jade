@@ -29,7 +29,7 @@ block body
 				+form_label('file_path', 'File Path')
 				+form_textInput('file_path', collection.file_path, {
 					'data-validation': 'required alphanumeric',
-					'data-validation-allowing': '._-/'
+					'data-validation-allowing': '._\\\-/'
 				})
 
 			+form_fieldset
@@ -37,5 +37,6 @@ block body
 
 block scripts
 	+plugin_bootbox
+	+plugin_validation
 	script(src = '/_shared/js/confirm-delete.js')
 	script(src = '/collections/js/edit.js')
