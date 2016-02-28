@@ -36,6 +36,15 @@ router.get('/', function (req, res) {
 });
 
 router.get('/scan', function (req, res) {
+
+	/*
+	 Control flow:
+	 - [bottom of function] Mongoose query to get root collections
+	 - [Mongoose callback] Root collection file paths are scanned for all media items
+	 - [processFileList] Raw list of file paths is turned into tree of collections (with IDs) and items
+	 - [processNewContent] Creates the collections that didn't have an ID in the first scan
+	 */
+
 	// takes an object input, where each key is the ID of a root collection,
 	// and each value is an array of the files in that collection
 	var processFileList = function (fileList) {
@@ -56,17 +65,22 @@ router.get('/scan', function (req, res) {
 						$parent_id: target.$id,
 						$children: {}
 					};
-
-					// TODO: work out if this collection already exists
 				}
 				target = target.$children[chunks[i]];
 			}
 
-			// add file
-			if (!target.hasOwnProperty('$items')) {
-				target['$items'] = [];
+			// decide what to do with the file
+			var fileName = chunks[chunks.length - 1];
+			if (fileName.substr(0, 7) == '.mb-id-') {
+				// use it as the ID
+				target['$id'] = fileName.substr(7);
+			} else {
+				// add file to the item list
+				if (!target.hasOwnProperty('$items')) {
+					target['$items'] = [];
+				}
+				target['$items'].push(fileName);
 			}
-			target['$items'].push(chunks[chunks.length - 1]);
 		};
 
 		// process each root collection
@@ -84,14 +98,17 @@ router.get('/scan', function (req, res) {
 			});
 		}
 
-		res.json(output);
+		// feed output to ID assignment
+		processNewContent(output);
 	};
 
-	// TODO: remove this
-	var DUMMY_DATA = true;
+	// takes a structures file three, with collection IDs
+	var processNewContent = function(fileTree) {
+		res.json(fileTree);
+	};
 
 	// get root collections, scan files, and feed them to processFileList
-	if (!DUMMY_DATA) Collection.get({parent_id: null}, function (err, collections) {
+	Collection.get({parent_id: null}, function (err, collections) {
 		if (err || !collections) {
 			res.status(500);
 			return res.end();
@@ -128,14 +145,9 @@ router.get('/scan', function (req, res) {
 			});
 		};
 
+		// start file walk
 		doWalk(0);
 	});
-
-	// dummy list
-	if (DUMMY_DATA) {
-		var dummyData = Rfr('./helpers/dummy-data.js');
-		processFileList(dummyData);
-	}
 });
 
 module.exports = router;
